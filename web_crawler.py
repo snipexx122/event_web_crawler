@@ -144,11 +144,16 @@ def loop_href(user,password,host,port,database,main_url,soup):
 
 
 if  __name__ == "__main__" :
-    user = sys.argv[0]
-    password = sys.argv[1]
-    host = sys.argv[2]
-    port = sys.argv[3]
-    database = sys.argv[4]
+    # user = sys.argv[0]
+    # password = sys.argv[1]
+    # host = sys.argv[2]
+    # port = sys.argv[3]
+    # database = sys.argv[4]
+    user = "postgres"
+    password = "5858259a"
+    host = "127.0.0.1"
+    port = "5432"
+    database = "main_db"
     
     main_url = "http://lucernefestival.ch"
     
