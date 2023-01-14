@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import psycopg2
-
+import sys
 
 
 def insert_into_sql_table(connection,cursor,date,time,location,title,artists,works,image_link):
@@ -20,6 +20,7 @@ def get_url_page_content(url):
     soup = BeautifulSoup(page.content, 'html.parser')
     
     return soup
+
 
 def get_date_time(soup):
     s = soup.find('div',class_="cell large-6 subtitle")
@@ -115,12 +116,17 @@ def get_insert_page_info(cursor,connection,url,main_url):
     
     insert_into_sql_table(connection,cursor,date,time,location,title,performers,works,image_url)
 
-def loop_href(main_url,soup):
-    connection = psycopg2.connect(user="postgres",
-                                  password="5858259a",
-                                  host="127.0.0.1",
-                                  port="5432",
-                                  database="main_db")
+def loop_href(user,password,host,port,database,main_url,soup):
+    # connection = psycopg2.connect(user="postgres",
+    #                               password="5858259a",
+    #                               host="127.0.0.1",
+    #                               port="5432",
+    #                               database="main_db")
+    connection = psycopg2.connect(user=user,
+                                  password=password,
+                                  host=host,
+                                  port=port,
+                                  database=database)
     cursor = connection.cursor()
     
     s1 = soup.find('ul', class_='event-list')
@@ -138,10 +144,16 @@ def loop_href(main_url,soup):
 
 
 if  __name__ == "__main__" :
+    user = sys.argv[0]
+    password = sys.argv[1]
+    host = sys.argv[2]
+    port = sys.argv[3]
+    database = sys.argv[4]
+    
     main_url = "http://lucernefestival.ch"
     
     url = main_url+"/en/program/summer-festival-23"
     
     soup = get_url_page_content(url)
     
-    loop_href(main_url,soup)
+    loop_href(user,password,host,port,database,main_url,soup)
