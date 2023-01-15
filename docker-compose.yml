@@ -2,6 +2,14 @@ version: "3.8"
 services:
   db:
     build: ./database/
+    env_file:
+      - credentials.env
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
   app :
     build: ./app/
     depends_on:
