@@ -42,25 +42,20 @@ date  | time | text | text | text[] | text[] | text
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/snipexx122/event_web_crawler.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd event_web_crawler
+
 ```
 
-Install dependencies
+Run 
 
 ```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start
+  docker-compose up --build
 ```
 
 
