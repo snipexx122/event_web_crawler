@@ -13,6 +13,13 @@ def insert_into_sql_table(connection,cursor,date,time,location,title,artists,wor
     ''',[date,time,location,title,artists,works,image_link])
     connection.commit()
 
+def read_sql_table(cursor):
+    cursor.execute('''
+    select * from events;
+    ''')
+    print(cursor.fetchall())
+
+
 
 def get_url_page_content(url):
     page = requests.get(url)
@@ -96,7 +103,6 @@ def get_image_url(soup):
 
     return s.find('source')['srcset']
     
-    print(image_url)
 
 def get_insert_page_info(cursor,connection,url,main_url):
     
@@ -117,11 +123,6 @@ def get_insert_page_info(cursor,connection,url,main_url):
     insert_into_sql_table(connection,cursor,date,time,location,title,performers,works,image_url)
 
 def loop_href(user,password,host,port,database,main_url,soup):
-    # connection = psycopg2.connect(user="postgres",
-    #                               password="5858259a",
-    #                               host="127.0.0.1",
-    #                               port="5432",
-    #                               database="main_db")
     connection = psycopg2.connect(user=user,
                                   password=password,
                                   host=host,
@@ -136,19 +137,17 @@ def loop_href(user,password,host,port,database,main_url,soup):
     counter = 0 
     
     for i in range(0,len(url_list)):
-        print("event number : " + str(counter))
+        print("event number : " + str(counter) + " read and recorded in the db")
         counter+=1
         get_insert_page_info(cursor,connection,main_url + url_list[i].find('a',href = True)['href'],main_url)
-
+    print("reading started:--------------------------------------")
+    
+    read_sql_table(cursor)
 
 
 
 if  __name__ == "__main__" :
-    # user = sys.argv[0]
-    # password = sys.argv[1]
-    # host = sys.argv[2]
-    # port = sys.argv[3]
-    # database = sys.argv[4]
+
     user = "username"
     password = "secret"
     host = "db"
@@ -162,3 +161,5 @@ if  __name__ == "__main__" :
     soup = get_url_page_content(url)
     
     loop_href(user,password,host,port,database,main_url,soup)
+    
+    print("reading done------------------------------------")

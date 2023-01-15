@@ -7,4 +7,4 @@ CREATE TABLE IF NOT EXISTS events
     event_artists text[] ,
     event_works text[] ,
     image_link text 
-)
+);

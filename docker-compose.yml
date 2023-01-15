@@ -4,4 +4,6 @@ services:
     build: ./database/
   app :
     build: ./app/
+    depends_on:
+      - db
   
