@@ -149,11 +149,11 @@ if  __name__ == "__main__" :
     # host = sys.argv[2]
     # port = sys.argv[3]
     # database = sys.argv[4]
-    user = "postgres"
-    password = "5858259a"
-    host = "127.0.0.1"
+    user = "username"
+    password = "secret"
+    host = "db"
     port = "5432"
-    database = "main_db"
+    database = "database"
     
     main_url = "http://lucernefestival.ch"
     
